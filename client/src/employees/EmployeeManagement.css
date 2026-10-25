@@ -1,0 +1,71 @@
+.employee-page { max-width: 1180px; margin: 48px auto; padding: 0 28px 64px; }
+.employee-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 24px; }
+.employee-heading h1, .employee-page > h1 { color: #17233d; font: 800 36px/1.15 "Manrope", sans-serif; letter-spacing: -1.5px; }
+.employee-heading p:not(.eyebrow) { margin: 10px 0 0; color: #71809a; line-height: 1.6; }
+.employee-heading .primary-button, .employee-actions .primary-button { border: 0; font: inherit; cursor: pointer; white-space: nowrap; }
+.employee-filters { display: grid; grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(140px, .55fr)); gap: 10px; margin-bottom: 18px; padding: 16px; border: 1px solid #e7ebf2; border-radius: 13px; background: white; }
+.employee-filters input, .employee-filters select, .employee-field input, .employee-field select { width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid #dce3ef; border-radius: 8px; outline: none; color: #17233d; background: white; font: 400 13px "DM Sans", sans-serif; }
+.employee-filters input:focus, .employee-filters select:focus, .employee-field input:focus, .employee-field select:focus { border-color: #496be0; box-shadow: 0 0 0 3px #496be01a; }
+.employee-table-wrap { overflow-x: auto; border: 1px solid #e7ebf2; border-radius: 13px; background: white; }
+.employee-table { width: 100%; border-collapse: collapse; text-align: left; }
+.employee-table th { padding: 13px 15px; color: #73809a; background: #f9faff; font-size: 10px; letter-spacing: .6px; text-transform: uppercase; white-space: nowrap; }
+.employee-table td { padding: 14px 15px; border-top: 1px solid #edf0f6; color: #52617a; font-size: 12px; white-space: nowrap; }
+.employee-table td:first-child { min-width: 225px; white-space: normal; }
+.employee-name { color: #25334e; font-weight: 700; }
+.employee-subline { display: block; margin-top: 5px; color: #8290a5; font-size: 10px; }
+.employee-row-link, .employee-back-link { color: #496be0; font: inherit; font-size: 12px; font-weight: 700; }
+.employee-status { display: inline-block; padding: 5px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; }
+.status-active { color: #16805d; background: #e8f7f0; }
+.status-inactive { color: #758198; background: #edf0f4; }
+.status-on-leave { color: #a66b23; background: #fff4e3; }
+.employee-pagination { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 15px; color: #8290a5; font-size: 12px; }
+.employee-pagination > div { display: flex; align-items: center; gap: 13px; }
+.employee-pagination button, .employee-secondary { min-height: 36px; padding: 8px 12px; border: 1px solid #dce3ef; border-radius: 8px; color: #45536e; background: white; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.employee-pagination button:disabled, .employee-secondary:disabled, .employee-actions .primary-button:disabled { opacity: .55; cursor: not-allowed; }
+.employee-empty, .employee-card, .employee-form { padding: 25px; border: 1px solid #e7ebf2; border-radius: 14px; background: white; box-shadow: 0 12px 36px #344c7909; }
+.employee-empty { text-align: center; }
+.employee-empty h2, .employee-card h2 { margin: 0 0 12px; color: #22314e; font: 700 16px "Manrope", sans-serif; }
+.employee-empty p, .employee-muted { color: #8490a3; font-size: 13px; line-height: 1.6; }
+.employee-form { display: grid; gap: 18px; }
+.employee-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.employee-field { display: grid; gap: 7px; color: #394967; font-size: 12px; font-weight: 700; }
+.employee-field small { color: #8490a3; font-size: 11px; font-weight: 400; line-height: 1.5; }
+.employee-field-wide { grid-column: 1 / -1; }
+.employee-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.employee-status-control { display: grid; gap: 5px; color: #71809a; font-size: 10px; font-weight: 700; }
+.employee-status-control select { min-height: 38px; padding: 8px 10px; border: 1px solid #dce3ef; border-radius: 8px; color: #45536e; background: white; font: inherit; font-size: 12px; }
+.employee-status-control select:disabled { opacity: .6; }
+.employee-detail-heading { align-items: center; }
+.employee-identity { display: flex; align-items: center; gap: 17px; min-width: 0; }
+.employee-identity h1 { overflow-wrap: anywhere; }
+.employee-identity p:not(.eyebrow) { color: #71809a; font-size: 13px; }
+.employee-avatar { display: grid; place-items: center; flex: 0 0 72px; width: 72px; height: 72px; border-radius: 20px; object-fit: cover; }
+.employee-avatar-fallback { color: #496be0; background: #eef1ff; font: 800 22px "Manrope", sans-serif; }
+.employee-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.employee-card dl { display: grid; gap: 0; margin: 0; }
+.employee-card dl > div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid #edf0f6; font-size: 12px; }
+.employee-card dt { color: #8290a5; }
+.employee-card dd { margin: 0; color: #25334e; text-align: right; font-weight: 600; }
+.employee-back-link { margin-top: 20px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.employee-feedback { font-size: 13px; line-height: 1.5; }
+.employee-error { color: #b23d43; }
+.employee-success { color: #16805d; }
+.employee-page .text-link { color: #496be0; font-weight: 700; }
+.employee-page .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 850px) {
+  .employee-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .employee-detail-heading { align-items: start; flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .employee-page { margin: 34px auto; padding: 0 18px 44px; }
+  .employee-heading { align-items: start; flex-direction: column; }
+  .employee-heading h1, .employee-page > h1 { font-size: 30px; }
+  .employee-filters, .employee-form-grid, .employee-detail-grid { grid-template-columns: 1fr; }
+  .employee-field-wide { grid-column: auto; }
+  .employee-pagination { align-items: start; flex-direction: column; }
+  .employee-identity { align-items: start; }
+  .employee-avatar { flex-basis: 54px; width: 54px; height: 54px; border-radius: 15px; }
+  .employee-card dl > div { align-items: start; flex-direction: column; gap: 6px; }
+  .employee-card dd { text-align: left; }
+}

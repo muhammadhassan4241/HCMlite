@@ -5,12 +5,14 @@ import Company from "./models/Company.js";
 import CompanyHoliday from "./models/CompanyHoliday.js";
 import Department from "./models/Department.js";
 import Designation from "./models/Designation.js";
+import Employee from "./models/Employee.js";
 import LeaveType from "./models/LeaveType.js";
 import User from "./models/User.js";
 import { createCompanyRouter } from "./routes/company.js";
 import healthRouter from "./routes/health.js";
 import { createAuthRouter } from "./routes/auth.js";
 import { createOrganizationRouter } from "./routes/organization.js";
+import { createEmployeeRouter } from "./routes/employees.js";
 
 export function createApp({
   frontendUrl,
@@ -45,6 +47,14 @@ export function createApp({
       "leave-types": organizationModels?.["leave-types"] || LeaveType,
       holidays: organizationModels?.holidays || CompanyHoliday
     }
+  }));
+  app.use("/api/employees", createEmployeeRouter({
+    jwtSecret,
+    userModel,
+    companyModel,
+    employeeModel: organizationModels?.employees || Employee,
+    departmentModel: organizationModels?.departments || Department,
+    designationModel: organizationModels?.designations || Designation
   }));
   app.use("/api/auth", createAuthRouter({
     jwtSecret,

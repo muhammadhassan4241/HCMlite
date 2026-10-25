@@ -61,3 +61,40 @@ export async function setOrganizationRecordActive(resource, recordId, active) {
   );
   return response.data.data.item;
 }
+
+export async function getEmployeeOptions(employeeId) {
+  const response = await apiClient.get("/employees/options", {
+    params: employeeId ? { employeeId } : undefined
+  });
+  return response.data.data;
+}
+
+export async function getEmployees(params = {}) {
+  const response = await apiClient.get("/employees", { params });
+  return response.data.data;
+}
+
+export async function getEmployee(employeeId) {
+  const response = await apiClient.get(`/employees/${employeeId}`);
+  return response.data.data.employee;
+}
+
+export async function getMyEmployeeProfile() {
+  const response = await apiClient.get("/employees/me");
+  return response.data.data.employee;
+}
+
+export async function createEmployee(employee) {
+  const response = await apiClient.post("/employees", employee);
+  return response.data.data.employee;
+}
+
+export async function updateEmployee(employeeId, employee) {
+  const response = await apiClient.put(`/employees/${employeeId}`, employee);
+  return response.data.data.employee;
+}
+
+export async function updateEmployeeStatus(employeeId, status) {
+  const response = await apiClient.patch(`/employees/${employeeId}/status`, { status });
+  return response.data.data.employee;
+}
