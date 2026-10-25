@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { authorizeRoles } from "../middleware/authorizeRoles.js";
+import { errorHandler } from "../middleware/errorHandler.js";
 
 function runMiddleware(middleware, auth) {
   const result = { nextCalled: false, status: null, body: null };
@@ -41,4 +42,30 @@ test("role middleware rejects unauthenticated requests", () => {
 
 test("role middleware rejects invalid role configuration", () => {
   assert.throws(() => authorizeRoles("Superuser"), /valid application roles/);
+});
+
+test("error handler preserves safe application error codes for client errors", () => {
+  const result = { status: null, body: null };
+  const response = {
+    headersSent: false,
+    status(status) {
+      result.status = status;
+      return this;
+    },
+    json(body) {
+      result.body = body;
+      return this;
+    }
+  };
+  errorHandler(
+    Object.assign(new Error("A check-in already exists"), { status: 409, code: "DUPLICATE_CHECK_IN" }),
+    {},
+    response,
+    () => {}
+  );
+  assert.equal(result.status, 409);
+  assert.deepEqual(result.body.error, {
+    code: "DUPLICATE_CHECK_IN",
+    message: "A check-in already exists"
+  });
 });

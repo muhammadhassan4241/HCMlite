@@ -17,7 +17,9 @@ export function errorHandler(error, req, res, next) {
       : 500;
   const code = error.code === 11000
     ? "DUPLICATE_RESOURCE"
-    : status === 400
+    : status < 500 && typeof error.code === "string" && /^[A-Z][A-Z0-9_]*$/.test(error.code)
+      ? error.code
+      : status === 400
       ? "BAD_REQUEST"
       : "INTERNAL_SERVER_ERROR";
   const duplicateMessage = "A record with the same company-scoped name already exists";

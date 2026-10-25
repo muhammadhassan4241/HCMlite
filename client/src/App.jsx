@@ -4,6 +4,7 @@ import { getApiHealth } from "./api.js";
 import { useAuth } from "./auth/AuthContext.jsx";
 import OrganizationSettings from "./admin/OrganizationSettings.jsx";
 import { EmployeeDetails, EmployeeDirectory, EmployeeForm } from "./employees/EmployeeManagement.jsx";
+import { AttendanceDashboardPage, EmployeeAttendancePage } from "./attendance/AttendancePages.jsx";
 
 const rolePaths = { Admin: "/admin", HR: "/hr", Employee: "/employee" };
 
@@ -55,6 +56,8 @@ function AppLayout({ children }) {
               <Link to={rolePaths[user.role]}>{user.role} workspace</Link>
               {user.role === "Admin" && <Link to="/admin/company">Company setup</Link>}
               {(user.role === "Admin" || user.role === "HR") && <Link to="/employees">Employees</Link>}
+              {(user.role === "Admin" || user.role === "HR") && <Link to="/attendance">Attendance</Link>}
+              {user.role === "Employee" && <Link to="/employee/attendance">Attendance</Link>}
               {user.role === "Employee" && <Link to="/employees/me">My profile</Link>}
               <span className="nav-user">{user.name}</span>
               <button className="text-button" onClick={handleLogout}>Log out</button>
@@ -236,6 +239,7 @@ function DashboardPlaceholder({ role }) {
         <div className="admin-workspace-links">
           <Link className="primary-button" to="/admin/company">Open company setup</Link>
           <Link className="text-link" to="/employees">Employee directory</Link>
+          <Link className="text-link" to="/attendance">Attendance dashboard</Link>
           <Link className="text-link" to="/admin/departments">Manage departments</Link>
           <Link className="text-link" to="/admin/designations">Manage designations</Link>
           <Link className="text-link" to="/admin/leave-types">Configure leave types</Link>
@@ -245,11 +249,13 @@ function DashboardPlaceholder({ role }) {
       {role === "HR" && (
         <div className="admin-workspace-links">
           <Link className="primary-button" to="/employees">Employee directory</Link>
+          <Link className="text-link" to="/attendance">Attendance dashboard</Link>
         </div>
       )}
       {role === "Employee" && (
         <div className="admin-workspace-links">
           <Link className="primary-button" to="/employees/me">View my employee profile</Link>
+          <Link className="text-link" to="/employee/attendance">Check in or view attendance</Link>
         </div>
       )}
     </section>
@@ -288,6 +294,8 @@ export default function App() {
         <Route path="/employees/me" element={<RequireAuth roles={["Employee"]}><EmployeeDetails ownProfile /></RequireAuth>} />
         <Route path="/employees/:id/edit" element={<RequireAuth roles={["Admin", "HR"]}><EmployeeForm edit /></RequireAuth>} />
         <Route path="/employees/:id" element={<RequireAuth><EmployeeDetails /></RequireAuth>} />
+        <Route path="/attendance" element={<RequireAuth roles={["Admin", "HR"]}><AttendanceDashboardPage /></RequireAuth>} />
+        <Route path="/employee/attendance" element={<RequireAuth roles={["Employee"]}><EmployeeAttendancePage /></RequireAuth>} />
         <Route path="/hr" element={<RequireAuth roles={["HR"]}><DashboardPlaceholder role="HR" /></RequireAuth>} />
         <Route path="/employee" element={<RequireAuth roles={["Employee"]}><DashboardPlaceholder role="Employee" /></RequireAuth>} />
         <Route path="/access-denied" element={<RequireAuth><AccessDeniedPage /></RequireAuth>} />

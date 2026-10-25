@@ -6,6 +6,7 @@ import CompanyHoliday from "./models/CompanyHoliday.js";
 import Department from "./models/Department.js";
 import Designation from "./models/Designation.js";
 import Employee from "./models/Employee.js";
+import Attendance from "./models/Attendance.js";
 import LeaveType from "./models/LeaveType.js";
 import User from "./models/User.js";
 import { createCompanyRouter } from "./routes/company.js";
@@ -13,6 +14,7 @@ import healthRouter from "./routes/health.js";
 import { createAuthRouter } from "./routes/auth.js";
 import { createOrganizationRouter } from "./routes/organization.js";
 import { createEmployeeRouter } from "./routes/employees.js";
+import { createAttendanceRouter } from "./routes/attendance.js";
 
 export function createApp({
   frontendUrl,
@@ -20,6 +22,7 @@ export function createApp({
   userModel,
   companyModel = Company,
   organizationModels,
+  attendanceModels,
   demoLoginEnabled,
   demoPasswords
 }) {
@@ -55,6 +58,16 @@ export function createApp({
     employeeModel: organizationModels?.employees || Employee,
     departmentModel: organizationModels?.departments || Department,
     designationModel: organizationModels?.designations || Designation
+  }));
+  app.use("/api/attendance", createAttendanceRouter({
+    jwtSecret,
+    userModel,
+    companyModel,
+    employeeModel: organizationModels?.employees || Employee,
+    attendanceModel: attendanceModels?.attendance || Attendance,
+    holidayModel: attendanceModels?.holidays || CompanyHoliday,
+    departmentModel: organizationModels?.departments || Department,
+    now: attendanceModels?.now
   }));
   app.use("/api/auth", createAuthRouter({
     jwtSecret,
