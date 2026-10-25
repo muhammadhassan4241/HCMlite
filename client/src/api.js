@@ -133,3 +133,38 @@ export async function correctAttendanceRecord(recordId, correction) {
   const response = await apiClient.patch(`/attendance/records/${recordId}`, correction);
   return response.data.data.attendance;
 }
+
+export async function getLeaveTypes() {
+  const response = await apiClient.get("/leaves/types");
+  return response.data.data.items;
+}
+
+export async function getMyLeaveBalances() {
+  const response = await apiClient.get("/leaves/me/balances");
+  return response.data.data;
+}
+
+export async function getMyLeaveRequests(params = {}) {
+  const response = await apiClient.get("/leaves/me/requests", { params });
+  return response.data.data;
+}
+
+export async function submitLeaveRequest(request) {
+  const response = await apiClient.post("/leaves/me/requests", request);
+  return response.data.data.request;
+}
+
+export async function cancelLeaveRequest(requestId) {
+  const response = await apiClient.patch(`/leaves/me/requests/${requestId}/cancel`, {});
+  return response.data.data.request;
+}
+
+export async function getLeaveRequests(params = {}) {
+  const response = await apiClient.get("/leaves/requests", { params });
+  return response.data.data;
+}
+
+export async function reviewLeaveRequest(requestId, decision, comment = "") {
+  const response = await apiClient.patch(`/leaves/requests/${requestId}/review`, { decision, comment });
+  return response.data.data.request;
+}

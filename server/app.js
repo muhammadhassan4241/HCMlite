@@ -7,6 +7,7 @@ import Department from "./models/Department.js";
 import Designation from "./models/Designation.js";
 import Employee from "./models/Employee.js";
 import Attendance from "./models/Attendance.js";
+import LeaveRequest from "./models/LeaveRequest.js";
 import LeaveType from "./models/LeaveType.js";
 import User from "./models/User.js";
 import { createCompanyRouter } from "./routes/company.js";
@@ -15,6 +16,7 @@ import { createAuthRouter } from "./routes/auth.js";
 import { createOrganizationRouter } from "./routes/organization.js";
 import { createEmployeeRouter } from "./routes/employees.js";
 import { createAttendanceRouter } from "./routes/attendance.js";
+import { createLeaveRouter } from "./routes/leaves.js";
 
 export function createApp({
   frontendUrl,
@@ -23,6 +25,7 @@ export function createApp({
   companyModel = Company,
   organizationModels,
   attendanceModels,
+  leaveModels,
   demoLoginEnabled,
   demoPasswords
 }) {
@@ -68,6 +71,16 @@ export function createApp({
     holidayModel: attendanceModels?.holidays || CompanyHoliday,
     departmentModel: organizationModels?.departments || Department,
     now: attendanceModels?.now
+  }));
+  app.use("/api/leaves", createLeaveRouter({
+    jwtSecret,
+    userModel,
+    companyModel,
+    employeeModel: organizationModels?.employees || Employee,
+    leaveTypeModel: organizationModels?.["leave-types"] || LeaveType,
+    leaveRequestModel: leaveModels?.requests || LeaveRequest,
+    holidayModel: organizationModels?.holidays || CompanyHoliday,
+    now: leaveModels?.now
   }));
   app.use("/api/auth", createAuthRouter({
     jwtSecret,

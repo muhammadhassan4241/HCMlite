@@ -5,6 +5,8 @@ import { useAuth } from "./auth/AuthContext.jsx";
 import OrganizationSettings from "./admin/OrganizationSettings.jsx";
 import { EmployeeDetails, EmployeeDirectory, EmployeeForm } from "./employees/EmployeeManagement.jsx";
 import { AttendanceDashboardPage, EmployeeAttendancePage } from "./attendance/AttendancePages.jsx";
+import { EmployeeLeavePage, LeaveInboxPage } from "./leaves/LeavePages.jsx";
+import { EmployeeWorkspace, HRWorkspace } from "./workspaces/Workspaces.jsx";
 
 const rolePaths = { Admin: "/admin", HR: "/hr", Employee: "/employee" };
 
@@ -57,7 +59,9 @@ function AppLayout({ children }) {
               {user.role === "Admin" && <Link to="/admin/company">Company setup</Link>}
               {(user.role === "Admin" || user.role === "HR") && <Link to="/employees">Employees</Link>}
               {(user.role === "Admin" || user.role === "HR") && <Link to="/attendance">Attendance</Link>}
+              {(user.role === "Admin" || user.role === "HR") && <Link to="/leaves">Leave requests</Link>}
               {user.role === "Employee" && <Link to="/employee/attendance">Attendance</Link>}
+              {user.role === "Employee" && <Link to="/employee/leaves">My leave</Link>}
               {user.role === "Employee" && <Link to="/employees/me">My profile</Link>}
               <span className="nav-user">{user.name}</span>
               <button className="text-button" onClick={handleLogout}>Log out</button>
@@ -240,6 +244,7 @@ function DashboardPlaceholder({ role }) {
           <Link className="primary-button" to="/admin/company">Open company setup</Link>
           <Link className="text-link" to="/employees">Employee directory</Link>
           <Link className="text-link" to="/attendance">Attendance dashboard</Link>
+          <Link className="text-link" to="/leaves">Review leave requests</Link>
           <Link className="text-link" to="/admin/departments">Manage departments</Link>
           <Link className="text-link" to="/admin/designations">Manage designations</Link>
           <Link className="text-link" to="/admin/leave-types">Configure leave types</Link>
@@ -296,8 +301,10 @@ export default function App() {
         <Route path="/employees/:id" element={<RequireAuth><EmployeeDetails /></RequireAuth>} />
         <Route path="/attendance" element={<RequireAuth roles={["Admin", "HR"]}><AttendanceDashboardPage /></RequireAuth>} />
         <Route path="/employee/attendance" element={<RequireAuth roles={["Employee"]}><EmployeeAttendancePage /></RequireAuth>} />
-        <Route path="/hr" element={<RequireAuth roles={["HR"]}><DashboardPlaceholder role="HR" /></RequireAuth>} />
-        <Route path="/employee" element={<RequireAuth roles={["Employee"]}><DashboardPlaceholder role="Employee" /></RequireAuth>} />
+        <Route path="/leaves" element={<RequireAuth roles={["Admin", "HR"]}><LeaveInboxPage /></RequireAuth>} />
+        <Route path="/employee/leaves" element={<RequireAuth roles={["Employee"]}><EmployeeLeavePage /></RequireAuth>} />
+        <Route path="/hr" element={<RequireAuth roles={["HR"]}><HRWorkspace /></RequireAuth>} />
+        <Route path="/employee" element={<RequireAuth roles={["Employee"]}><EmployeeWorkspace /></RequireAuth>} />
         <Route path="/access-denied" element={<RequireAuth><AccessDeniedPage /></RequireAuth>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

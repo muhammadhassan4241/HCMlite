@@ -1,0 +1,72 @@
+.leave-page { max-width: 1240px; margin: 46px auto; padding: 0 28px 64px; }
+.leave-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 24px; }
+.leave-heading h1 { margin: 0; color: #17233d; font: 800 36px/1.15 "Manrope", sans-serif; letter-spacing: -1.5px; }
+.leave-heading p:not(.eyebrow) { margin: 10px 0 0; color: #71809a; line-height: 1.6; }
+.leave-panel, .leave-balance-card { padding: 22px; border: 1px solid #e7ebf2; border-radius: 14px; background: white; box-shadow: 0 12px 36px #344c7909; }
+.leave-content-grid { display: grid; grid-template-columns: minmax(290px, .8fr) minmax(0, 1.2fr); gap: 18px; align-items: start; }
+.leave-balance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.leave-balance-card { display: grid; gap: 10px; padding: 18px; }
+.leave-balance-card > span { color: #71809a; font-size: 11px; font-weight: 700; }
+.leave-balance-card > strong { color: #25334e; font: 800 25px "Manrope", sans-serif; }
+.leave-balance-card small { color: #8290a5; font: 600 12px "DM Sans", sans-serif; }
+.leave-balance-card p { margin: 0; color: #8290a5; font-size: 11px; }
+.leave-panel h2 { margin: 0 0 17px; color: #22314e; font: 700 18px "Manrope", sans-serif; }
+.leave-panel .eyebrow { margin-bottom: 7px; }
+.leave-request-form, .leave-review-actions label { display: grid; gap: 13px; }
+.leave-request-form label, .leave-review-actions label, .leave-inbox-toolbar label { display: grid; gap: 6px; color: #52617a; font-size: 11px; font-weight: 700; }
+.leave-request-form input, .leave-request-form select, .leave-request-form textarea,
+.leave-review-actions textarea, .leave-inbox-toolbar select { width: 100%; min-height: 39px; padding: 9px 10px; border: 1px solid #dce3ef; border-radius: 7px; color: #25334e; background: white; font: 400 12px "DM Sans", sans-serif; }
+.leave-request-form textarea, .leave-review-actions textarea { min-height: 78px; resize: vertical; }
+.leave-date-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.leave-request-form .primary-button, .leave-review-actions .primary-button { width: fit-content; border: 0; font: inherit; cursor: pointer; }
+.leave-request-form .primary-button:disabled, .leave-review-actions button:disabled { opacity: .6; cursor: not-allowed; }
+.leave-hint, .leave-muted { color: #8290a5; font-size: 11px; line-height: 1.5; }
+.leave-hint { margin: 0; }
+.leave-feedback { font-size: 13px; line-height: 1.5; }
+.leave-error { color: #b23d43; }
+.leave-success { color: #16805d; }
+.leave-muted { font-size: 13px; }
+.leave-panel-heading, .leave-request-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.leave-panel-heading { margin-bottom: 14px; }
+.leave-panel-heading .eyebrow { margin: 0 0 5px; color: #77859a; font-size: 10px; }
+.leave-panel-heading h2 { margin: 0; }
+.leave-panel-heading > span, .leave-inbox-toolbar > span { color: #8290a5; font-size: 12px; }
+.leave-request-list, .leave-inbox-list { display: grid; }
+.leave-request-item, .leave-inbox-item { padding: 15px 0; border-top: 1px solid #edf0f6; }
+.leave-request-title strong { color: #25334e; font-size: 13px; }
+.leave-request-title > div { display: grid; gap: 4px; }
+.leave-request-title > div > span { color: #8290a5; font-size: 10px; }
+.leave-request-item > p, .leave-inbox-item > p { margin: 8px 0 0; color: #71809a; font-size: 11px; line-height: 1.5; }
+.leave-request-item .leave-reason, .leave-inbox-item .leave-reason { color: #52617a; white-space: pre-wrap; }
+.leave-review-comment { color: #a66b23 !important; }
+.leave-status { padding: 5px 9px; border-radius: 14px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.leave-pending { color: #9b6b18; background: #fff4df; }
+.leave-approved { color: #16805d; background: #e8f7f0; }
+.leave-rejected { color: #b23d43; background: #fff0f0; }
+.leave-cancelled { color: #6f7890; background: #f0f2f6; }
+.leave-link-button, .leave-inline-link { padding: 0; border: 0; color: #496be0; background: transparent; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; text-decoration: none; }
+.leave-link-button { margin-top: 10px; }
+.leave-empty { padding: 22px; text-align: center; }
+.leave-empty h2 { margin: 0 0 8px; color: #25334e; font-size: 15px; }
+.leave-empty p { margin: 0; color: #8290a5; font-size: 12px; line-height: 1.6; }
+.leave-empty.compact { padding: 30px 12px; }
+.leave-pagination { display: flex; justify-content: end; align-items: center; gap: 12px; margin-top: 15px; color: #8290a5; font-size: 11px; }
+.leave-pagination button { padding: 7px 10px; border: 1px solid #dce3ef; border-radius: 7px; color: #45536e; background: white; font: inherit; cursor: pointer; }
+.leave-pagination button:disabled { opacity: .5; cursor: not-allowed; }
+.leave-inbox-toolbar { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); align-items: end; gap: 10px; margin-bottom: 14px; padding: 15px; border: 1px solid #e7ebf2; border-radius: 12px; background: white; }
+.leave-inbox-toolbar input, .leave-inbox-toolbar select { width: 100%; min-height: 39px; padding: 9px 10px; border: 1px solid #dce3ef; border-radius: 7px; color: #25334e; background: white; font: 400 12px "DM Sans", sans-serif; }
+.leave-inbox-toolbar > span { grid-column: 1 / -1; justify-self: end; }
+.leave-inbox-item { padding: 18px 0; }
+.leave-inbox-meta { display: flex; flex-wrap: wrap; gap: 9px 18px; margin-top: 11px; color: #71809a; font-size: 11px; }
+.leave-review-actions { display: grid; grid-template-columns: minmax(220px, 1fr) auto; align-items: end; gap: 12px; margin-top: 14px; }
+.leave-review-actions > div { display: flex; gap: 8px; }
+.leave-reject-button { padding: 9px 13px; border: 1px solid #e6b7b8; border-radius: 8px; color: #a84348; background: white; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+@media (max-width: 760px) {
+  .leave-page { margin: 34px auto; padding: 0 18px 44px; }
+  .leave-heading { align-items: start; flex-direction: column; }
+  .leave-heading h1 { font-size: 30px; }
+  .leave-content-grid { grid-template-columns: 1fr; }
+  .leave-review-actions { grid-template-columns: 1fr; }
+  .leave-inbox-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -1,0 +1,32 @@
+.workspace-page { max-width: 1120px; margin: 46px auto; padding: 0 28px 64px; }
+.workspace-heading { margin-bottom: 22px; }
+.workspace-heading h1 { margin: 0; color: #17233d; font: 800 36px/1.15 "Manrope", sans-serif; letter-spacing: -1.5px; }
+.workspace-heading > p:last-child { margin: 9px 0 0; color: #71809a; font-size: 13px; }
+.workspace-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+.workspace-metric, .workspace-profile { padding: 20px; border: 1px solid #e7ebf2; border-radius: 13px; background: white; box-shadow: 0 12px 36px #344c7909; }
+.workspace-metric { display: grid; gap: 12px; min-height: 110px; }
+.workspace-metric span { color: #71809a; font-size: 11px; font-weight: 700; }
+.workspace-metric strong { color: #25334e; font: 800 27px "Manrope", sans-serif; }
+.workspace-metric small { color: #a84348; font-size: 10px; }
+.workspace-info { color: #9b6b18; font-size: 12px; line-height: 1.5; }
+.workspace-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 13px; margin-top: 18px; }
+.workspace-links a { display: grid; gap: 8px; padding: 19px; border: 1px solid #e7ebf2; border-radius: 12px; background: white; color: #25334e; text-decoration: none; transition: border-color .15s, transform .15s; }
+.workspace-links a:hover { border-color: #b8c5f5; transform: translateY(-2px); }
+.workspace-links strong { font: 700 14px "Manrope", sans-serif; }
+.workspace-links span { color: #8290a5; font-size: 11px; line-height: 1.5; }
+.workspace-profile { max-width: 720px; }
+.workspace-profile h2 { margin: 0; color: #25334e; font: 700 20px "Manrope", sans-serif; }
+.workspace-profile .eyebrow { margin: 0 0 7px; }
+.workspace-profile dl { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+.workspace-profile dl div { display: grid; gap: 4px; }
+.workspace-profile dt { color: #8290a5; font-size: 10px; }
+.workspace-profile dd { margin: 0; color: #25334e; font-size: 12px; font-weight: 600; }
+.workspace-text-link { color: #496be0; font-size: 12px; font-weight: 700; text-decoration: none; }
+.workspace-unlinked p, .workspace-muted { color: #71809a; font-size: 12px; line-height: 1.6; }
+.workspace-unlinked { border-color: #f0ddba; background: #fffaf1; }
+
+@media (max-width: 760px) {
+  .workspace-page { margin: 34px auto; padding: 0 18px 44px; }
+  .workspace-heading h1 { font-size: 30px; }
+  .workspace-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
