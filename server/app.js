@@ -1,0 +1,59 @@
+import cors from "cors";
+import express from "express";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import Company from "./models/Company.js";
+import CompanyHoliday from "./models/CompanyHoliday.js";
+import Department from "./models/Department.js";
+import Designation from "./models/Designation.js";
+import LeaveType from "./models/LeaveType.js";
+import User from "./models/User.js";
+import { createCompanyRouter } from "./routes/company.js";
+import healthRouter from "./routes/health.js";
+import { createAuthRouter } from "./routes/auth.js";
+import { createOrganizationRouter } from "./routes/organization.js";
+
+export function createApp({
+  frontendUrl,
+  jwtSecret,
+  userModel,
+  companyModel = Company,
+  organizationModels,
+  demoLoginEnabled,
+  demoPasswords
+}) {
+  if (!frontendUrl || !jwtSecret) {
+    throw new TypeError("Frontend URL and JWT secret are required to configure the API");
+  }
+
+  const app = express();
+
+  app.use(cors({ origin: frontendUrl }));
+  app.use(express.json());
+  app.use("/api/health", healthRouter);
+  app.use("/api/company", createCompanyRouter({
+    jwtSecret,
+    userModel,
+    companyModel
+  }));
+  app.use("/api/organization", createOrganizationRouter({
+    jwtSecret,
+    userModel,
+    companyModel,
+    models: {
+      departments: organizationModels?.departments || Department,
+      designations: organizationModels?.designations || Designation,
+      "leave-types": organizationModels?.["leave-types"] || LeaveType,
+      holidays: organizationModels?.holidays || CompanyHoliday
+    }
+  }));
+  app.use("/api/auth", createAuthRouter({
+    jwtSecret,
+    userModel,
+    demoLoginEnabled,
+    demoPasswords
+  }));
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+
+  return app;
+}

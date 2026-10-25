@@ -1,0 +1,64 @@
+.organization-shell { max-width: 1240px; margin: 0 auto; }
+.organization-nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 18px 28px 0; }
+.organization-nav a { padding: 9px 12px; border: 1px solid #e3e8f1; border-radius: 8px; color: #52617a; background: #fff; font-size: 12px; font-weight: 700; }
+.organization-nav a:hover, .organization-nav a:focus-visible { border-color: #bfcaf3; color: #3c5fd2; background: #f7f8ff; }
+.organization-page { max-width: 1180px; margin: 52px auto; padding: 0 28px 64px; }
+.organization-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 26px; }
+.organization-heading h1, .organization-page > h1 { font: 800 36px/1.15 "Manrope", sans-serif; letter-spacing: -1.5px; color: #17233d; }
+.organization-heading p:not(.eyebrow) { margin: 10px 0 0; color: #71809a; line-height: 1.6; }
+.organization-grid { display: grid; grid-template-columns: minmax(280px, .75fr) minmax(0, 1.25fr); align-items: start; gap: 20px; }
+.organization-panel { padding: 25px; border: 1px solid #e7ebf2; border-radius: 15px; background: white; box-shadow: 0 12px 36px #344c7909; }
+.organization-panel h2 { margin: 0 0 19px; font: 700 16px "Manrope", sans-serif; color: #22314e; }
+.organization-form { display: grid; gap: 15px; }
+.org-field { display: grid; gap: 7px; color: #394967; font-size: 12px; font-weight: 700; }
+.org-field input, .org-field select, .org-field textarea, .org-search input { width: 100%; min-height: 42px; padding: 10px 12px; border: 1px solid #dce3ef; border-radius: 8px; outline: none; color: #17233d; background: #fff; font: 400 13px "DM Sans", sans-serif; }
+.org-field textarea { min-height: 88px; resize: vertical; }
+.org-field input:focus, .org-field select:focus, .org-field textarea:focus, .org-search input:focus { border-color: #496be0; box-shadow: 0 0 0 3px #496be01a; }
+.org-checkbox { display: flex; align-items: center; gap: 9px; min-height: 36px; color: #394967; font-size: 13px; font-weight: 600; }
+.org-checkbox input, .org-weekdays input { accent-color: #496be0; }
+.org-form-actions { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.org-form-actions .primary-button, .company-settings-form > .primary-button { border: 0; font: inherit; cursor: pointer; }
+.org-form-actions .primary-button:disabled, .company-settings-form > .primary-button:disabled { opacity: .65; cursor: wait; }
+.org-secondary-button { padding: 12px 15px; border: 1px solid #dce3ef; border-radius: 8px; color: #45536e; background: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.org-feedback { margin: 0; font-size: 13px; line-height: 1.5; }
+.org-error { color: #b23d43; }
+.org-success { color: #16805d; }
+.org-list-heading { display: flex; align-items: center; justify-content: space-between; }
+.org-list-heading h2 { margin-bottom: 0; }
+.org-list-heading > span { display: grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border-radius: 20px; color: #496be0; background: #eef1ff; font-size: 12px; font-weight: 700; }
+.org-search { display: block; margin: 17px 0; }
+.org-record-list { display: grid; }
+.org-record { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 0; border-top: 1px solid #edf0f6; }
+.org-record > div:first-child { display: grid; gap: 4px; min-width: 0; }
+.org-record strong { overflow-wrap: anywhere; color: #25334e; font-size: 13px; }
+.org-record > div:first-child > span { color: #8290a5; font-size: 11px; }
+.org-record-inactive { opacity: .68; }
+.org-record-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; justify-content: end; }
+.org-status { padding: 4px 7px; border-radius: 12px; font-size: 10px; font-weight: 700; }
+.org-status.is-active { color: #16805d; background: #e8f7f0; }
+.org-status.is-inactive { color: #758198; background: #edf0f4; }
+.org-link-button { padding: 3px 0; border: 0; color: #496be0; background: transparent; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+.org-muted { color: #8490a3; font-size: 13px; line-height: 1.6; }
+.company-settings-form { display: grid; gap: 16px; }
+.company-settings-form h2:not(:first-child) { margin-top: 14px; }
+.org-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.org-weekdays { margin: 2px 0 0; padding: 0; border: 0; }
+.org-weekdays legend { margin-bottom: 10px; color: #394967; font-size: 12px; font-weight: 700; }
+.org-weekdays > div { display: flex; gap: 8px; flex-wrap: wrap; }
+.org-weekdays label { display: flex; align-items: center; gap: 5px; min-height: 38px; padding: 0 10px; border: 1px solid #e2e7f0; border-radius: 8px; color: #596780; font-size: 11px; font-weight: 700; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+@media (max-width: 850px) {
+  .organization-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .organization-nav { padding: 14px 18px 0; gap: 6px; }
+  .organization-nav a { padding: 8px 9px; font-size: 11px; }
+  .organization-page { margin: 36px auto; padding: 0 18px 44px; }
+  .organization-heading h1, .organization-page > h1 { font-size: 30px; }
+  .organization-panel { padding: 20px; }
+  .org-form-grid { grid-template-columns: 1fr; }
+  .org-record { align-items: start; flex-direction: column; }
+  .org-record-actions { justify-content: start; }
+}
