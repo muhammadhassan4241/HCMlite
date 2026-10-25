@@ -15,10 +15,6 @@ export async function setupCompany({
   if (typeof adminEmail !== "string" || !adminEmail.trim()) {
     throw new SetupCompanyError("ADMIN_EMAIL must identify the existing Admin account");
   }
-  if (typeof companyName !== "string" || !companyName.trim() || companyName.trim().length > 120) {
-    throw new SetupCompanyError("COMPANY_NAME is required and must be at most 120 characters");
-  }
-
   const admins = await userModel.find({
     email: adminEmail.trim().toLowerCase(),
     role: "Admin"
@@ -32,44 +28,49 @@ export async function setupCompany({
   }
 
   const admin = admins[0];
+  let company = null;
+  let createdCompany = false;
+  let status = "already-associated";
   if (admin.companyId) {
-    const associatedCompany = await companyModel.findById(admin.companyId).select("name");
-    if (!associatedCompany) {
+    company = await companyModel.findById(admin.companyId).select("_id name");
+    if (!company) {
       throw new SetupCompanyError("Admin has a company association that does not exist");
     }
-    return { company: associatedCompany, status: "already-associated" };
-  }
+  } else {
+    const companyCount = await companyModel.countDocuments();
+    if (companyCount > 1) {
+      throw new SetupCompanyError(
+        "Multiple companies exist; assign the Admin to the intended company before setup"
+      );
+    }
 
-  const companyCount = await companyModel.countDocuments();
-  if (companyCount > 1) {
-    throw new SetupCompanyError(
-      "Multiple companies exist; assign the Admin to the intended company before setup"
+    company = companyCount === 1
+      ? await companyModel.findOne().select("_id name")
+      : null;
+    if (!company) {
+      if (typeof companyName !== "string" || !companyName.trim() || companyName.trim().length > 120) {
+        throw new SetupCompanyError("COMPANY_NAME is required and must be at most 120 characters");
+      }
+      company = await companyModel.create({
+        name: companyName.trim(),
+        slug: "hcm-lite-primary-company",
+        timeZone: "UTC",
+        workingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        openingTime: "09:00",
+        closingTime: "17:00"
+      });
+      createdCompany = true;
+    }
+
+    const result = await userModel.updateOne(
+      { _id: admin._id, role: "Admin", companyId: null },
+      { $set: { companyId: company._id } }
     );
-  }
-
-  let company = companyCount === 1
-    ? await companyModel.findOne().select("_id name")
-    : null;
-  let createdCompany = false;
-  if (!company) {
-    company = await companyModel.create({
-      name: companyName.trim(),
-      slug: "hcm-lite-primary-company",
-      timeZone: "UTC",
-      workingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      openingTime: "09:00",
-      closingTime: "17:00"
-    });
-    createdCompany = true;
-  }
-
-  const result = await userModel.updateOne(
-    { _id: admin._id, role: "Admin", companyId: null },
-    { $set: { companyId: company._id } }
-  );
-  if (result.matchedCount !== 1) {
-    if (createdCompany) await companyModel.deleteOne({ _id: company._id });
-    throw new SetupCompanyError("Admin association changed during setup; no change was made");
+    if (result.matchedCount !== 1) {
+      if (createdCompany) await companyModel.deleteOne({ _id: company._id });
+      throw new SetupCompanyError("Admin association changed during setup; no change was made");
+    }
+    status = createdCompany ? "created-and-associated" : "associated-existing";
   }
 
   for (const [email, role] of [
@@ -83,7 +84,7 @@ export async function setupCompany({
     );
   }
 
-  return { company, status: createdCompany ? "created-and-associated" : "associated-existing" };
+  return { company, status };
 }
 
 async function run() {

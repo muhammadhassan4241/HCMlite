@@ -6,7 +6,12 @@ const adminId = "64b000000000000000000031";
 const companyId = "64b000000000000000000032";
 
 function setupModels({ admins = [{ _id: adminId, companyId: null }], initialCompanies = [] } = {}) {
-  const users = [...admins];
+  const users = [
+    ...admins.map((admin) => ({ email: "admin@example.com", role: "Admin", ...admin })),
+    { _id: "demo-admin", email: "demo.admin@hcm-lite.local", role: "Admin", companyId: null },
+    { _id: "demo-hr", email: "demo.hr@hcm-lite.local", role: "HR", companyId: null },
+    { _id: "demo-employee", email: "demo.employee@hcm-lite.local", role: "Employee", companyId: null }
+  ];
   const companies = [...initialCompanies];
   const userUpdates = [];
   return {
@@ -14,12 +19,17 @@ function setupModels({ admins = [{ _id: adminId, companyId: null }], initialComp
     companies,
     userUpdates,
     userModel: {
-      find() {
-        return { select: async () => users };
+      find(filter) {
+        return { select: async () => users.filter((entry) =>
+          entry.role === filter.role && entry.email === filter.email
+        ) };
       },
       async updateOne(filter, update) {
         userUpdates.push({ filter, update });
-        const user = users.find((entry) => String(entry._id) === String(filter._id));
+        const user = users.find((entry) =>
+          (filter._id ? String(entry._id) === String(filter._id) : entry.email === filter.email) &&
+          (!filter.role || entry.role === filter.role)
+        );
         if (!user || (filter.companyId === null && user.companyId != null)) {
           return { matchedCount: 0 };
         }
@@ -86,4 +96,22 @@ test("company setup refuses when the configured Admin is not unique", async () =
     /No existing Admin/
   );
   assert.equal(models.companies.length, 0);
+});
+
+test("confirmed setup repairs only unassigned demo accounts when the Admin already has a company", async () => {
+  const company = { _id: companyId, name: "Existing company" };
+  const models = setupModels({
+    admins: [{ _id: adminId, email: "admin@example.com", role: "Admin", companyId }],
+    initialCompanies: [company]
+  });
+  const result = await setupCompany({
+    adminEmail: "admin@example.com",
+    ...models
+  });
+
+  assert.equal(result.status, "already-associated");
+  assert.equal(models.users[0].companyId, companyId);
+  assert.ok(models.users.slice(1).every((user) => user.companyId === companyId));
+  assert.equal(models.companies.length, 1);
+  assert.equal(models.userUpdates.length, 3);
 });

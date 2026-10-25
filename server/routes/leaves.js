@@ -261,7 +261,11 @@ export function createLeaveRouter({
           status: "Pending"
         },
         {
-          $set: { status: "Cancelled", cancelledAt: now(), activeDates: [] }
+          $set: {
+            status: "Cancelled",
+            cancelledAt: now(),
+            activeDates: [`released:${req.params.id}`]
+          }
         },
         { new: true, runValidators: true }
       );
@@ -371,7 +375,9 @@ export function createLeaveRouter({
             reviewComment: comment.trim(),
             reviewedBy: req.user._id,
             reviewedAt: now(),
-            ...(body.decision === "Rejected" ? { activeDates: [] } : {})
+            ...(body.decision === "Rejected"
+              ? { activeDates: [`released:${req.params.id}`] }
+              : {})
           }
         },
         { new: true, runValidators: true }

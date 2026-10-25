@@ -207,7 +207,6 @@ test("leave overlap index scopes active work dates by company and employee", () 
   );
   assert.ok(index);
   assert.equal(index[1].unique, true);
-  assert.ok(index[1].partialFilterExpression);
 });
 
 test("employees can submit self-scoped requests with server-calculated working days", async () => {
@@ -330,6 +329,7 @@ test("HR can reject with a required comment and decisions are atomic and auditab
   assert.equal(rejectedRequest.status, "Rejected");
   assert.equal(rejectedRequest.reviewComment, "Insufficient notice");
   assert.equal(String(rejectedRequest.reviewedBy), hrId);
+  assert.deepEqual(rejectedRequest.activeDates, [`released:${ownId}`]);
 
   const duplicateDecision = await request(`/api/leaves/requests/${ownId}/review`, {
     userId: adminId, method: "PATCH",

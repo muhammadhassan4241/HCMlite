@@ -26,7 +26,7 @@ const leaveRequestSchema = new mongoose.Schema(
 
 leaveRequestSchema.index(
   { companyId: 1, employeeId: 1, activeDates: 1 },
-  { unique: true, partialFilterExpression: { "activeDates.0": { $exists: true } } }
+  { unique: true }
 );
 leaveRequestSchema.index({ companyId: 1, status: 1, startDate: -1 });
 leaveRequestSchema.index({ companyId: 1, employeeId: 1, startDate: -1 });
