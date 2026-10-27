@@ -7,7 +7,7 @@ let baseUrl;
 
 before(async () => {
   const app = createApp({
-    frontendUrl: "http://localhost:5173",
+    frontendUrl: "https://hc-mlite.vercel.app",
     jwtSecret: "test-only-secret-that-is-long-enough"
   });
   server = app.listen(0);
@@ -25,6 +25,24 @@ test("GET /api/health responds with the healthy API status", async () => {
   const response = await fetch(`${baseUrl}/api/health`);
   assert.equal(response.status, 200);
   assert.deepEqual(await response.json(), { success: true, status: "ok" });
+});
+
+test("CORS permits the production frontend origin", async () => {
+  const response = await fetch(`${baseUrl}/api/health`, {
+    headers: { Origin: "https://hc-mlite.vercel.app" }
+  });
+  assert.equal(response.headers.get("access-control-allow-origin"), "https://hc-mlite.vercel.app");
+});
+
+test("GET / describes the API and points to its health endpoint", async () => {
+  const response = await fetch(`${baseUrl}/`);
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    success: true,
+    service: "HCM Lite API",
+    status: "ok",
+    health: "/api/health"
+  });
 });
 
 test("unknown routes use the consistent API error shape", async () => {

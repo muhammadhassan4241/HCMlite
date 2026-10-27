@@ -18,14 +18,22 @@ const fakeUserModel = {
   }
 };
 
-async function addUser({ id, name, email, role, status = "active", password = "correct horse battery staple" }) {
+async function addUser({
+  id,
+  name,
+  email,
+  role,
+  status = "active",
+  companyId = "company-test",
+  password = "correct horse battery staple"
+}) {
   const user = {
     _id: id,
     name,
     email,
     role,
     status,
-    companyId: null,
+    companyId,
     passwordHash: await hashPassword(password, 4)
   };
   userRecords.set(id, user);
@@ -75,8 +83,26 @@ test("valid login returns a bearer token and a safe user profile", async () => {
   assert.equal(body.success, true);
   assert.equal(body.data.user.role, "Admin");
   assert.equal(body.data.user.email, "admin@example.com");
+  assert.equal(body.data.user.companyId, "company-test");
   assert.equal("passwordHash" in body.data.user, false);
   assert.equal(typeof body.data.accessToken, "string");
+});
+
+test("normal login accepts active users across roles while demo login is disabled", async () => {
+  for (const [email, role] of [
+    ["hr@example.com", "HR"],
+    ["employee@example.com", "Employee"]
+  ]) {
+    const response = await request("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password: "correct horse battery staple" })
+    });
+    assert.equal(response.status, 200);
+    const body = await response.json();
+    assert.equal(body.data.user.role, role);
+    assert.equal(body.data.user.companyId, "company-test");
+  }
 });
 
 test("invalid credentials and inactive accounts are rejected", async () => {
@@ -116,7 +142,7 @@ test("authenticated /me returns current database role and no password hash", asy
     email: "admin@example.com",
     role: "Admin",
     status: "active",
-    companyId: null
+    companyId: "company-test"
   });
 });
 

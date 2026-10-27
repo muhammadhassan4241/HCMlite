@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { getApiHealth } from "./api.js";
+import { getLoginErrorMessage } from "./auth/loginErrors.js";
 import { useAuth } from "./auth/AuthContext.jsx";
 import OrganizationSettings from "./admin/OrganizationSettings.jsx";
 import { EmployeeDetails, EmployeeDirectory, EmployeeForm } from "./employees/EmployeeManagement.jsx";
@@ -14,7 +15,7 @@ function getDemoLoginErrorMessage(requestError) {
   const code = requestError.response?.data?.error?.code;
   const messages = {
     DEMO_LOGIN_DISABLED:
-      "Demo login is disabled. Set DEMO_LOGIN_ENABLED=true in server/.env and restart the API for local development.",
+      "Demo accounts are disabled on this API. Use your account email and password to sign in.",
     DEMO_CREDENTIALS_NOT_CONFIGURED:
       "Demo passwords are not configured on the server. Set all three DEMO_*_PASSWORD values in server/.env and restart the API.",
     DEMO_ACCOUNT_NOT_PROVISIONED:
@@ -145,7 +146,7 @@ function LoginPage() {
       const requestedPath = location.state?.from;
       navigate(requestedPath || rolePaths[authenticatedUser.role], { replace: true });
     } catch (requestError) {
-      setError(requestError.response?.data?.error?.message || "Unable to sign in. Please try again.");
+      setError(getLoginErrorMessage(requestError));
     } finally {
       setLoading(false);
     }

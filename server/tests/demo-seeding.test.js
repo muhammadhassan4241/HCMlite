@@ -23,8 +23,10 @@ function createUserModel(initialUsers = []) {
 
 test("provisions three demo accounts with bcrypt hashes and supported roles", async () => {
   const userModel = createUserModel();
+  const companyId = "company-demo";
   const results = await seedDemoAccounts({
     passwords,
+    companyId,
     userModel,
     hash: (password) => hashPassword(password, 4)
   });
@@ -36,6 +38,7 @@ test("provisions three demo accounts with bcrypt hashes and supported roles", as
     "Employee"
   ]);
   for (const user of userModel.users.values()) {
+    assert.equal(user.companyId, companyId);
     assert.match(user.passwordHash, /^\$2[aby]\$/);
     assert.equal("password" in user, false);
     assert.equal(await verifyPassword(passwords[user.role], user.passwordHash), true);

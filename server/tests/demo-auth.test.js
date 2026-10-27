@@ -5,6 +5,7 @@ import { createAccessToken } from "../utils/jwt.js";
 import { hashPassword } from "../utils/password.js";
 
 const secret = "test-only-secret-that-is-long-enough";
+const demoCompanyId = "company-demo";
 const passwords = {
   Admin: "admin-demo-password",
   HR: "human-resources-demo-password",
@@ -53,7 +54,7 @@ before(async () => {
       email: account.email,
       role: account.role,
       status: "active",
-      companyId: null,
+      companyId: demoCompanyId,
       passwordHash: await hashPassword(passwords[account.passwordKey], 4)
     });
   }
@@ -85,6 +86,7 @@ test("demo login authenticates each configured role through the API", async () =
     assert.equal(response.status, 200);
     const body = await response.json();
     assert.equal(body.data.user.role, role);
+    assert.equal(body.data.user.companyId, demoCompanyId);
     assert.equal(typeof body.data.accessToken, "string");
     assert.equal("passwordHash" in body.data.user, false);
 

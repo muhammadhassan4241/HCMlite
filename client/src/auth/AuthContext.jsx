@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { apiClient, demoLogin as requestDemoLogin } from "../api.js";
+import { getAuthSession } from "./session.js";
 
 const AuthContext = createContext(null);
 
@@ -11,14 +12,14 @@ export function AuthProvider({ children }) {
       user,
       async login(email, password) {
         const response = await apiClient.post("/auth/login", { email, password });
-        const { accessToken, user: authenticatedUser } = response.data.data;
+        const { accessToken, user: authenticatedUser } = getAuthSession(response.data);
         apiClient.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
         setUser(authenticatedUser);
         return authenticatedUser;
       },
       async loginDemo(role) {
         const response = await requestDemoLogin(role);
-        const { accessToken, user: authenticatedUser } = response.data;
+        const { accessToken, user: authenticatedUser } = getAuthSession(response);
         apiClient.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
         setUser(authenticatedUser);
         return authenticatedUser;
