@@ -88,6 +88,14 @@ export function createApp({
     demoLoginEnabled,
     demoPasswords
   }));
+  app.get("/", (req, res) => {
+    res.json({
+      success: true,
+      service: "HCM Lite API",
+      status: "ok",
+      health: "/api/health"
+    });
+  });
   app.use(notFoundHandler);
   app.use(errorHandler);
 

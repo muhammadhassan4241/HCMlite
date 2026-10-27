@@ -12,7 +12,7 @@
     "reset:admin-password": "node scripts/resetAdminPassword.js",
     "test": "node --test"
   },
-  "dependencies": {
+  "dependencies":{
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
